@@ -5,4 +5,5 @@
 struct GameData{
 	int score;
 };
+
 using MyApp = SceneManager < String, GameData >;

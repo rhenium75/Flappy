@@ -4,13 +4,17 @@
 # include "../Flappy.hpp"
 
 struct Title : MyApp::Scene{
+	
 	void init() override{}
+
 	void update() override{
 		if (Input::MouseL.clicked){
 			changeScene(L"Game");
 		}
 	}
-	void draw()const override{
 
+	void draw()const override{
+		TextureAsset(L"Title").draw(-49,0);
 	}
+
 };
