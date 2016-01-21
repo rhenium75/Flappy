@@ -1,5 +1,4 @@
-Example
-Engine
-Debug
-*.swp
-
+*.*
+!*.cpp
+!*.hpp
+!*.h
