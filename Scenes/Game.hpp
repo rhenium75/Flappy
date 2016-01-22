@@ -42,8 +42,8 @@ class Block{
 
 	}
 	void draw(){
-		UpRect.draw(Palette::Green);
-		DownRect.draw(Palette::Green);
+		UpRect(TextureAsset(L"Dokan")).draw();
+		DownRect(TextureAsset(L"Dokan")).draw();
 	}
 };
 
@@ -61,7 +61,8 @@ public:
 	virtual void update(){
 		body.moveBy(Move);
 		Move.moveBy(0,0.5);
-		//Move.y = Min((int)Move.y,10);
+		body.y = Clamp(body.y, 0., 540.);
+		Move.y = Min(Move.y, 20.);
 		if (!IsDeath() && Input::MouseL.clicked){
 			Move.set(Move.x, -10);
 		}
@@ -72,8 +73,8 @@ public:
 	bool IsDeath(){
 		return Death;
 	}
-	bool OnGround(){
-		return body.y > 590;
+	bool OnGround() const{
+		return body.y >= 540;
 	}
 };
 
@@ -83,10 +84,12 @@ struct Game : MyApp::Scene{
 	int Time;
 	Array<Block> blocks;
 	Effect effect;
+	bool ScreenShot = false;
 
 	void init() override{
 		player = Player();
 		Time = 0;
+		m_data->score = 0;
 	}
 
 	void update() override{
@@ -110,14 +113,23 @@ struct Game : MyApp::Scene{
 		}
 
 		if (Time % 30 == 0) m_data->score += 10;
-		if (player.OnGround()) changeScene(L"Result");
+		if (player.OnGround() && ScreenShot) {
+			m_data->Result_Back = ScreenCapture::GetFrame();
+			changeScene(L"Result",0,true);
+		}
+		if (player.OnGround() && !ScreenShot) {
+			ScreenCapture::Request();
+			ScreenShot = true;
+		}
 	}
 
 	void draw()const override{
-		effect.update();
+		Graphics2D::SetTransform(Mat3x2::Translate(Vec2(0, 0)));
 		TextureAsset(L"Sky").draw();
 		TextureAsset(L"Cloud").draw(480 - fmod(Time/4., 1928), 0);
 		TextureAsset(L"Cloud").draw(480 - fmod(Time/4.+964, 1928), 0);
+		effect.update();
+		if (ScreenShot) Graphics2D::SetTransform(Mat3x2::Translate(Vec2(0, 0)));
 		player.draw();
 		for (auto block : blocks) block.draw();
 		TextureAsset(L"Ground").draw(480 - fmod(Time, 1928), 0);

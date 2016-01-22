@@ -10,7 +10,7 @@ void Main(){
 	Window::SetTitle(L"Flappy Hakka 1.0");
 	Window::Resize({480,640});
 
-	MyApp manager; //(SceneManagerOption::ShowSceneName);
+	MyApp manager;// (SceneManagerOption::ShowSceneName);
 	manager.setFadeColor(Palette::Black);
 	manager.add<Title>(L"Title");
 	manager.add<Game>(L"Game");
@@ -25,6 +25,7 @@ void Main(){
 	TextureAsset::Register(L"Sky", L"Images/Sky.png");
 	TextureAsset::Register(L"Dokan", L"Images/Dokan.png");
 	TextureAsset::Register(L"Hakka1", L"Images/Hakka1.png");
+	TextureAsset::Register(L"Dokan", L"Images/Dokan.png");
 
 	FontAsset::Register(L"Font",30);
 

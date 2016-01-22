@@ -4,6 +4,7 @@
 
 struct GameData{
 	int score;
+	Image Result_Back;
 };
 
 using MyApp = SceneManager < String, GameData >;
