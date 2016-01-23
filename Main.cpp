@@ -1,11 +1,12 @@
 ﻿
+#pragma once
 # include <Siv3D.hpp>
 # include <HamFramework.hpp>
 # include "Flappy.hpp"
 # include "Scenes.h"
 
 
-void Main(){
+void Main(){		
 	
 	Window::SetTitle(L"Flappy Hakka 1.0");
 	Window::Resize({480,640});
